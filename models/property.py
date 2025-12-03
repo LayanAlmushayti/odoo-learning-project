@@ -40,4 +40,41 @@ class Propert(models.Model):
 # - 'this name is exist': error message when duplicate data is entered
     _sql_constraints = [
     ('unique_name', 'unique("name")', 'this name is exist'),
-]
+    ]
+
+
+    #Relational Fields
+    owner_id = fields.Many2one('owner')
+    tag_ids = fields.Many2many('tag')
+
+
+    #CRUD
+    #overwrite create function
+    @api.model_create_multi
+    def create(self , vals):
+        res = super(Propert, self).create(vals) #or super(Propert, self).create(vals)
+        #logic
+        print("inside create method")
+        return res
+    
+    #read
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None, access_rights_uid=None):
+        res= super()._search(domain, offset, limit, order, access_rights_uid)
+        #logic
+        print("inside search method")
+        return res
+    
+    #update
+    def write(self, vals):
+        res = super().write(vals)
+        #logic
+        print("inside write method")
+        return res
+    
+    #delete
+    def unlink(self):
+        res = super(Propert , self).unlink()
+        #logic
+        print("inside delete method")
+        return res

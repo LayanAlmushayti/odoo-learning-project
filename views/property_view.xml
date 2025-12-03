@@ -4,9 +4,11 @@
         <field name="name">property tree</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree multi_edit ='1' create='1' edit = '1' delete ='1'> <!-- Allows the user to edit, create, and delete records directly from the Tree View , 0 if not allowed -->
+
                 <field name="name"/>
                 <field name="postcode"/>
+                <field name="owner_id"/>
                 <field name="date_availability"/>
                 <field name="selling_price"/>
                 <field name="garden_area"/>
@@ -21,8 +23,7 @@
         <field name="name">property form</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <form>
-
+            <form create='1' edit = '1' delete ='1'> <!-- These permissions (create, edit, delete) can be controlled not only from CSV files but also directly at the view level -->
                 <sheet>
                     <div class='oe_title'>
                         <label for="name"/>
@@ -43,11 +44,13 @@
                             
                         </group>
                         <group string="aditional info.">
+                            <field name="owner_id"/>
                             <field name="garden_area"/>
                             <field name="bedrooms" />
                             <field name="garage" />
                             <field name="garden" />
                             <field name="garden_orientation" />
+                            <field name="tag_ids" widget= 'many2many_tags' /> 
                         </group>
                         <group>
                             <field name="description" required='1'/> <!-- XML 'required' checks only in the UI, while Python 'required' enforces it in the model/database -->
