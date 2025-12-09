@@ -48,6 +48,15 @@ class Propert(models.Model):
     tag_ids = fields.Many2many('tag')
 
 
+    state = fields.Selection([
+        ('draft' , 'Draft'),
+        ('pending' , 'Pending'),
+        ('sold' , 'Sold'),
+    ], default= 'draft')
+
+
+
+
     #CRUD
     #overwrite create function
     @api.model_create_multi
