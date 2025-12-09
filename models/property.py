@@ -9,8 +9,9 @@ class Propert(models.Model):
     description = fields.Char()
     postcode = fields.Char(required= 1)
     date_availability = fields.Date()
-    expected_price = fields.Float(digits=(0,5)) # limits the float field to 5 decimal places
+    expected_price = fields.Float() # digits=(0,5) limits the float field to 5 decimal places
     selling_price = fields.Float ()
+    diff = fields.Float(compute="_compute_diff" , store = 1) #readonly= 0, if i want the user to be able to edit, not only read it
     bedrooms = fields.Integer(required= 1)
     living_area = fields.Integer()
     facades = fields.Integer()
@@ -55,7 +56,23 @@ class Propert(models.Model):
     ], default= 'draft')
 
 
+# Any compute method must have @api.depends to know when to recalculate
 
+#If the user changes expected_price → recalculate total_profit
+#If the user changes selling_price → recalculate total_profit
+#Odoo will automatically call the compute function again without you doing anything.
+    @api.depends('expected_price', 'selling_price' ,'owner_id.phone') # Runs compute again if price fields or owner_id.phone is updated
+    def _compute_diff(self):
+        for rec in self:
+            rec.diff = rec.expected_price - rec.selling_price
+
+
+    @api.onchange('expected_price') # Runs only in the UI to update fields instantly when expected_price changes
+    def _onchange_expected_price(self):
+        print('inside onchange')
+        return {
+            'warning' : {'title': 'warning' , 'message' : 'negative value', 'type':'notification'}
+        }
 
     #CRUD
     #overwrite create function
