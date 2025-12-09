@@ -87,3 +87,18 @@ class Propert(models.Model):
         #logic
         print("inside delete method")
         return res
+    
+    def action_draft(self):
+        for rec in self:
+            print('inside draft action')
+            rec.state = 'draft'
+
+    def action_pending(self):
+        for rec in self:
+            print('inside pending action')
+            rec.state = 'pending'
+
+    def action_sold(self):
+        for rec in self:
+            print('inside sold action')
+            rec.state = 'sold'

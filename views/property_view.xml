@@ -27,6 +27,12 @@
             <form create='1' edit = '1' delete ='1'> <!-- These permissions (create, edit, delete) can be controlled not only from CSV files but also directly at the view level -->
                 <sheet>
                     <header>
+                        <button name="action_draft" type="object" class="btn-primary" string="Set to draft"
+                        invisible="state == 'draft'"/>
+                        <button name="action_pending" type="object" class="btn-secondary" string="pending"
+                        invisible="state != 'draft'"/>
+                        <button name="action_sold" type="object" class="btn-success" string="sold"
+                        invisible="state != 'pending'"/>
                         <field name = "state" widget ="statusbar"/> <!-- statusbar_visible= "draft, sold" - if i want to deside what i want to appear--> <!-- options = "{'clickable': 1} - if i want to change the state from the header"-->
                     </header>
                     <div class='oe_title'>
