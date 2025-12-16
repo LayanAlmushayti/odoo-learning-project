@@ -24,7 +24,12 @@ class Propert(models.Model):
         ('east' , 'East'),
         ('west' , 'West'),
     ])
+    #Relational Fields
+    owner_id = fields.Many2one('owner')
+    tag_ids = fields.Many2many('tag')
 
+    owner_address = fields.Char(related = 'owner_id.address') # u can use readonly = 0 if you want the user to edit the val from the prop form
+    owner_phone = fields.Char(related = 'owner_id.phone') # if u want to store this field u can use store = 1
 
 # This constraint ensures that the 'bedrooms' field is always greater than zero; 
 # if the value is 0, it raises a ValidationError to prevent saving invalid data.
@@ -44,9 +49,7 @@ class Propert(models.Model):
     ]
 
 
-    #Relational Fields
-    owner_id = fields.Many2one('owner')
-    tag_ids = fields.Many2many('tag')
+
 
 
     state = fields.Selection([
