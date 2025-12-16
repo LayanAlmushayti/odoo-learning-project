@@ -4,7 +4,7 @@
         <field name="name">property tree</field>
         <field name="model">property</field>
         <field name="arch" type="xml">
-            <tree multi_edit ='1' create='1' edit = '1' delete ='1'> <!-- Allows the user to edit, create, and delete records directly from the Tree View , 0 if not allowed -->
+            <tree multi_edit ='1' create='1' edit = '1' delete ='1' class="header_custom"> <!-- Allows the user to edit, create, and delete records directly from the Tree View , 0 if not allowed -->
 
                 <field name="name"/>
                 <field name="postcode"/>
